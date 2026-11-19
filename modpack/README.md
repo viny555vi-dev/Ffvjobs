@@ -61,4 +61,4 @@ The camera also remains accessible with Minecraft's normal perspective toggle (F
 The pack is not compatible with Fabric or older Forge releases.
 
 ## Verification
-The automated hosted VM compiles all three modules, launches the actual NeoForge GameTestServer and runs 9 mod GameTests plus Minecraft's default test. The workflow artifact includes the modpack ZIP and server logs.
+The automated hosted VM compiles all three modules, launches the actual NeoForge GameTestServer and runs 10 mod GameTests plus Minecraft's default test. The workflow artifact includes the modpack ZIP and server logs.
