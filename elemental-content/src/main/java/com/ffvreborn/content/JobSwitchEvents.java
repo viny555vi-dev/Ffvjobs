@@ -27,7 +27,7 @@ public final class JobSwitchEvents {
         String next = JOBS.get((index + 1 + JOBS.size()) % JOBS.size());
         player.setData(RpgAttachments.PLAYER, data.withJob(next));
         player.syncData(RpgAttachments.PLAYER);
-        player.displayClientMessage(Component.literal("Profissão ativa: " + next.toUpperCase() +
-            " • Nv. " + data.level(next) + " • ABP " + data.abp(next)), true);
+        player.sendSystemMessage(Component.literal("Profissão ativa: " + next.toUpperCase() +
+            " • Nv. " + data.level(next) + " • ABP " + data.abp(next)));
     }
 }
