@@ -26,7 +26,7 @@ public final class ClientParticleRegistration {
             new AetherParticle(level, x, y, z, dx, dy, dz, Blocks.MAGMA_BLOCK.defaultBlockState(), AETHER_GROUP));
         event.registerSpecial(ModParticles.FROST_SHARD.get(), (type, level, x, y, z, dx, dy, dz, random) ->
             new AetherParticle(level, x, y, z, dx, dy, dz, Blocks.BLUE_ICE.defaultBlockState(), FROST_GROUP));
-        event.registerSpecial(ModParticles.RUNE_SPARK.get(), (type, level, x, y, z, dx, dy, dz) ->
+        event.registerSpecial(ModParticles.RUNE_SPARK.get(), (type, level, x, y, z, dx, dy, dz, random) ->
             new AetherParticle(level, x, y, z, dx, dy, dz, Blocks.AMETHYST_BLOCK.defaultBlockState(), RUNE_GROUP));
     }
 }
