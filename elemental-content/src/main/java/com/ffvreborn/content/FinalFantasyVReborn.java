@@ -31,6 +31,7 @@ public final class FinalFantasyVReborn {
         TEST_FUNCTIONS.register("summon_entity", () -> FfvGameTests::summonEntitySpawn);
     public FinalFantasyVReborn(IEventBus modBus) {
         ModItems.ITEMS.register(modBus);
+        ModBlocks.BLOCKS.register(modBus);
         RpgAttachments.TYPES.register(modBus);
         ModEntities.register(modBus);
         ModParticles.TYPES.register(modBus);
