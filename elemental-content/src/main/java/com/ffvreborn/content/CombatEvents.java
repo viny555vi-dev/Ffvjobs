@@ -20,18 +20,22 @@ public final class CombatEvents {
     public static void onHostileKilled(LivingDeathEvent event) {
         LivingEntity victim = event.getEntity();
         Entity attacker = event.getSource().getEntity();
-        if (!(attacker instanceof ServerPlayer player) || !(victim instanceof Monster)) return;
+        if (!(attacker instanceof ServerPlayer player) || !(victim instanceof Monster) || victim instanceof FFVSummon) return;
         PlayerProgression current = player.getData(RpgAttachments.PLAYER);
         int xp = CombatLoot.xpForKill(victim.getMaxHealth(), true);
-        player.setData(RpgAttachments.PLAYER, current.awardKillXp(xp));
+        PlayerProgression updated = current.awardKillXp(xp);
+        player.setData(RpgAttachments.PLAYER, updated);
         player.syncData(RpgAttachments.PLAYER);
+        player.displayClientMessage(net.minecraft.network.chat.Component.literal(
+            current.activeJob().toUpperCase() + "  +" + xp + " EXP  •  Nv. " + updated.level(current.activeJob()) +
+            "  •  ABP " + updated.abp(current.activeJob())), true);
     }
 
     @SubscribeEvent
     public static void onHostileDrops(LivingDropsEvent event) {
         LivingEntity victim = event.getEntity();
         Entity attacker = event.getSource().getEntity();
-        if (!(attacker instanceof ServerPlayer player) || !(victim instanceof Monster)) return;
+        if (!(attacker instanceof ServerPlayer player) || !(victim instanceof Monster) || victim instanceof FFVSummon) return;
         float luck = (float) player.getLuck();
         CombatLoot.Drop drop = CombatLoot.roll(new java.util.Random(victim.getRandom().nextLong()), luck);
         if (drop == CombatLoot.Drop.NONE) return;
