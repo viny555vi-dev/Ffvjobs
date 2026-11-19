@@ -1,6 +1,6 @@
 package com.ffvreborn.content.client;
 
-import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -21,15 +21,15 @@ public final class AdventureCameraEvents {
         event.setCinematicCameraEnabled(true);
     }
     @SubscribeEvent public static void fov(ViewportEvent.ComputeFov event) {
-        Camera camera = event.getCamera();
-        if (camera.getEntity() instanceof Player player) {
+        Player player = Minecraft.getInstance().player;
+        if (player != null) {
             double speed = Math.sqrt(player.getDeltaMovement().horizontalDistanceSqr());
             event.setFOV(event.getFOV() + (float) Math.min(2.4d, speed * 3.2d));
         }
     }
     @SubscribeEvent public static void angles(ViewportEvent.ComputeCameraAngles event) {
-        Camera camera = event.getCamera();
-        if (camera.getEntity() instanceof Player player) {
+        Player player = Minecraft.getInstance().player;
+        if (player != null) {
             double speed = Math.sqrt(player.getDeltaMovement().horizontalDistanceSqr());
             float strideRoll = (float) Math.sin(player.tickCount * 0.18d) * (float) Math.min(0.65d, speed * 0.20d);
             event.setRoll(event.getRoll() + strideRoll);
