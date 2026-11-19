@@ -25,6 +25,10 @@ public final class FinalFantasyVReborn {
         TEST_FUNCTIONS.register("bestiary_spawn", () -> FfvGameTests::bestiarySpawn);
     public static final DeferredHolder<Consumer<GameTestHelper>, Consumer<GameTestHelper>> LOOT_TEST =
         TEST_FUNCTIONS.register("loot_balance", () -> FfvGameTests::lootBalance);
+    public static final DeferredHolder<Consumer<GameTestHelper>, Consumer<GameTestHelper>> ABILITY_PROGRESS_TEST =
+        TEST_FUNCTIONS.register("ability_progression", () -> FfvGameTests::abilityProgression);
+    public static final DeferredHolder<Consumer<GameTestHelper>, Consumer<GameTestHelper>> SUMMON_ENTITY_TEST =
+        TEST_FUNCTIONS.register("summon_entity", () -> FfvGameTests::summonEntitySpawn);
     public FinalFantasyVReborn(IEventBus modBus) {
         ModItems.ITEMS.register(modBus);
         RpgAttachments.TYPES.register(modBus);
