@@ -1,0 +1,1 @@
+{"type":"neoforge:add_spawns","biomes":"#minecraft:is_overworld","spawners":[{"type":"ffv_reborn:aether_wisp","weight":18,"minCount":1,"maxCount":2}]}
