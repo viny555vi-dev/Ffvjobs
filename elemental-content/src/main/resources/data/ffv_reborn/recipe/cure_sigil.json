@@ -1,15 +1,9 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:paper"
-    },
-    {
-      "item": "ffv_reborn:aether_shard"
-    },
-    {
-      "item": "minecraft:gold_nugget"
-    }
+    "minecraft:paper",
+    "ffv_reborn:aether_shard",
+    "minecraft:gold_nugget"
   ],
   "result": {
     "id": "ffv_reborn:cure_sigil",
