@@ -111,7 +111,7 @@ public final class FfvGameTests {
     }
     public static void summonEntitySpawn(GameTestHelper helper) {
         helper.assertTrue(ModEntities.PYREWING.isBound(), "Pyrewing summon type missing");
-        helper.assertTrue(ModEntities.FROSTMane.isBound(), "Frostmane summon type missing");
+        helper.assertTrue(ModEntities.FROSTMANE.isBound(), "Frostmane summon type missing");
         helper.assertTrue(ModEntities.TERRAGORN.isBound(), "Terragorn summon type missing");
         var creature = helper.spawn(ModEntities.PYREWING.get(), new BlockPos(3, 1, 3));
         helper.assertTrue(creature.isAlive(), "Pyrewing did not spawn in Minecraft");
