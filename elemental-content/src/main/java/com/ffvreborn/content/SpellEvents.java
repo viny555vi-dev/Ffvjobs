@@ -4,6 +4,9 @@ import com.ffvreborn.abilities.AbilityCatalog;
 import com.ffvreborn.abilities.AbilityDefinition;
 import com.ffvreborn.core.PlayerProgression;
 import java.util.Comparator;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -20,6 +23,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 @EventBusSubscriber(modid = FinalFantasyVReborn.MOD_ID)
 public final class SpellEvents {
+    private static final Map<UUID, Map<String, Long>> COOLDOWNS = new ConcurrentHashMap<>();
     private SpellEvents() {}
     @SubscribeEvent
     public static void castSigil(PlayerInteractEvent.RightClickItem event) {
@@ -45,6 +49,12 @@ public final class SpellEvents {
             player.sendSystemMessage(Component.literal("Esta técnica exige a profissão " + ability.jobId() + "."));
             return;
         }
+        long now = player.level().getGameTime();
+        long readyAt = COOLDOWNS.getOrDefault(player.getUUID(), Map.of()).getOrDefault(id, 0L);
+        if (now < readyAt) {
+            player.sendSystemMessage(Component.literal("Técnica em recarga: " + (readyAt - now) + " ticks."));
+            return;
+        }
         try {
             data = data.spendMana(ability.manaCost());
         } catch (IllegalStateException error) {
@@ -54,6 +64,7 @@ public final class SpellEvents {
         player.setData(RpgAttachments.PLAYER, data);
         player.syncData(RpgAttachments.PLAYER);
         execute(player, ability.effect());
+        COOLDOWNS.computeIfAbsent(player.getUUID(), ignored -> new ConcurrentHashMap<>()).put(id, now + ability.cooldownTicks());
         player.sendSystemMessage(Component.literal(id.toUpperCase() + " conjurado • " + ability.manaCost() + " PM"));
     }
     private static String abilityFor(Item item) {
