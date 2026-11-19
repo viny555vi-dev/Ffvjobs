@@ -78,28 +78,28 @@ public final class SpellEvents {
             mob -> mob.isAlive() && mob.distanceToSqr(player) <= 100)
             .stream().min(Comparator.comparingDouble(player::distanceToSqr)).orElse(null);
         switch (effect) {
-            case "fire_burst" -> damageTarget(player, target, level, 8.0f, ParticleTypes.FLAME, true);
+            case "fire_burst" -> damageTarget(player, target, level, 8.0f, ModParticles.AETHER_FLARE.get(), true);
             case "frost_lance" -> {
-                damageTarget(player, target, level, 7.0f, ParticleTypes.SNOWFLAKE, false);
+                damageTarget(player, target, level, 7.0f, ModParticles.FROST_SHARD.get(), false);
                 if (target != null) target.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 100, 1));
             }
-            case "storm_arc" -> damageTarget(player, target, level, 11.0f, ParticleTypes.ELECTRIC_SPARK, false);
-            case "aether_flare" -> damageTarget(player, target, level, 22.0f, ParticleTypes.END_ROD, true);
-            case "mending_light" -> { player.heal(8.0f); burst(level, player, ParticleTypes.HAPPY_VILLAGER, 24); }
-            case "verdant_regrowth" -> { player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 1)); burst(level, player, ParticleTypes.HAPPY_VILLAGER, 30); }
-            case "quickening" -> { player.addEffect(new MobEffectInstance(MobEffects.SPEED, 240, 1)); burst(level, player, ParticleTypes.CRIT, 20); }
+            case "storm_arc" -> damageTarget(player, target, level, 11.0f, ModParticles.RUNE_SPARK.get(), false);
+            case "aether_flare" -> damageTarget(player, target, level, 22.0f, ModParticles.AETHER_FLARE.get(), true);
+            case "mending_light" -> { player.heal(8.0f); burst(level, player, ModParticles.RUNE_SPARK.get(), 24); }
+            case "verdant_regrowth" -> { player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 1)); burst(level, player, ModParticles.RUNE_SPARK.get(), 30); }
+            case "quickening" -> { player.addEffect(new MobEffectInstance(MobEffects.SPEED, 240, 1)); burst(level, player, ModParticles.RUNE_SPARK.get(), 20); }
             case "temporal_snare" -> {
                 if (target != null) target.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 160, 3));
-                burst(level, player, ParticleTypes.PORTAL, 22);
+                burst(level, player, ModParticles.RUNE_SPARK.get(), 22);
             }
-            case "shadow_strike" -> damageTarget(player, target, level, 14.0f, ParticleTypes.SMOKE, false);
-            case "inner_focus" -> { player.heal(5.0f); burst(level, player, ParticleTypes.CRIT, 18); }
+            case "shadow_strike" -> damageTarget(player, target, level, 14.0f, ModParticles.RUNE_SPARK.get(), false);
+            case "inner_focus" -> { player.heal(5.0f); burst(level, player, ModParticles.RUNE_SPARK.get(), 18); }
             case "skyfall" -> {
                 player.addEffect(new MobEffectInstance(MobEffects.JUMP_BOOST, 100, 2));
                 if (target != null) target.hurt(player.damageSources().playerAttack(player), 10.0f);
-                burst(level, player, ParticleTypes.CLOUD, 26);
+                burst(level, player, ModParticles.FROST_SHARD.get(), 26);
             }
-            case "wind_cut" -> damageTarget(player, target, level, 9.0f, ParticleTypes.SWEEP_ATTACK, false);
+            case "wind_cut" -> damageTarget(player, target, level, 9.0f, ModParticles.RUNE_SPARK.get(), false);
             default -> { }
         }
     }
