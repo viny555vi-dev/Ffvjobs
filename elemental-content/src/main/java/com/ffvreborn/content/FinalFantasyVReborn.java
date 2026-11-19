@@ -18,6 +18,10 @@ public final class FinalFantasyVReborn {
         TEST_FUNCTIONS.register("item_registered", () -> FfvGameTests::itemRegistered);
     public static final DeferredHolder<Consumer<GameTestHelper>, Consumer<GameTestHelper>> JOB_TEST =
         TEST_FUNCTIONS.register("job_progress", () -> FfvGameTests::jobProgressWorks);
+    public static final DeferredHolder<Consumer<GameTestHelper>, Consumer<GameTestHelper>> ABILITY_TEST =
+        TEST_FUNCTIONS.register("ability_cast", () -> FfvGameTests::abilityCanBeLearnedAndCast);
+    public static final DeferredHolder<Consumer<GameTestHelper>, Consumer<GameTestHelper>> SUMMON_TEST =
+        TEST_FUNCTIONS.register("summon_cast", () -> FfvGameTests::summonCanBeInvoked);
     public FinalFantasyVReborn(IEventBus modBus) {
         ITEMS.register(modBus);
         TEST_FUNCTIONS.register(modBus);
