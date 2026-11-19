@@ -21,6 +21,9 @@ public final class ClientEntityRegistration {
         event.registerEntityRenderer(ModEntities.CINDER_WOLF.get(), c -> new FFVMonsterRenderer(c, texture("cinder_wolf")));
         event.registerEntityRenderer(ModEntities.MIRE_HAG.get(), c -> new FFVMonsterRenderer(c, texture("mire_hag")));
         event.registerEntityRenderer(ModEntities.AETHER_WISP.get(), c -> new FFVMonsterRenderer(c, texture("aether_wisp")));
+        event.registerEntityRenderer(ModEntities.PYREWING.get(), c -> new FFVMonsterRenderer(c, texture("cinder_wolf")));
+        event.registerEntityRenderer(ModEntities.FROSTMane.get(), c -> new FFVMonsterRenderer(c, texture("aether_wisp")));
+        event.registerEntityRenderer(ModEntities.TERRAGORN.get(), c -> new FFVMonsterRenderer(c, texture("mire_hag")));
     }
     private static Identifier texture(String name) {
         return Identifier.fromNamespaceAndPath(FinalFantasyVReborn.MOD_ID, "textures/entity/" + name + ".png");
