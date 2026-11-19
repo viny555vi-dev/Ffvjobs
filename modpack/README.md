@@ -29,12 +29,12 @@ The pack contains one installable mod JAR built from three communicating Gradle 
 **Abilities and gear**
 - 12 job-gated techniques: elemental attacks, healing, regeneration, haste, temporal snare, shadow strike, chakra, skyfall and wind cut
 - Fire, frost and rune custom particle groups
-- Embersteel Blade, Tideglass Staff, Wyrmfang Spear and Verdant Longbow
+- Embersteel Blade, Tideglass Staff and Wyrmfang Spear with custom melee damage; Verdant Longbow is a functional bow
 - Aether Shards and rare weapons can drop from hostile mobs; relics are also added to simple dungeon chests
 
 **Presentation and controls**
 - Original procedural creature model animation
-- Third-person adventure camera: 4.35-block detached follow distance, speed-aware FOV, subtle movement roll and tuned turn response
+- Over-the-shoulder third-person camera: custom shoulder offset, 4.35-block follow distance, speed-aware FOV, subtle movement roll and tuned turn response
 - SDL3 gamepad bridge supports a directly connected DualSense and DualSenseX configured as an XInput controller
 
 ### DualSense / DualSenseX mapping
