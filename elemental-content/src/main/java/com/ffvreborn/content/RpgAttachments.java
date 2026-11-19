@@ -12,7 +12,8 @@ public final class RpgAttachments {
         Codec.unboundedMap(Codec.STRING, Codec.LONG).optionalFieldOf("xp", java.util.Map.of()).forGetter(PlayerProgression::xpByJob),
         Codec.unboundedMap(Codec.STRING, Codec.INT).optionalFieldOf("levels", java.util.Map.of("freelancer", 1)).forGetter(PlayerProgression::levelsByJob),
         Codec.unboundedMap(Codec.STRING, Codec.INT).optionalFieldOf("abp", java.util.Map.of()).forGetter(PlayerProgression::abpByJob),
-        Codec.INT.optionalFieldOf("mana", 100).forGetter(PlayerProgression::mana)
+        Codec.INT.optionalFieldOf("mana", 100).forGetter(PlayerProgression::mana),
+        Codec.STRING.listOf().optionalFieldOf("learned_abilities", java.util.List.of()).forGetter(PlayerProgression::learnedAbilities)
     ).apply(instance, PlayerProgression::new));
     public static final DeferredRegister<AttachmentType<?>> TYPES =
         DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, FinalFantasyVReborn.MOD_ID);
