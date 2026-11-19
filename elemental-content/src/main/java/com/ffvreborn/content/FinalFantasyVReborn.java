@@ -33,6 +33,7 @@ public final class FinalFantasyVReborn {
         ModItems.ITEMS.register(modBus);
         RpgAttachments.TYPES.register(modBus);
         ModEntities.register(modBus);
+        ModParticles.TYPES.register(modBus);
         TEST_FUNCTIONS.register(modBus);
         modBus.addListener(FfvGameTests::registerTests);
     }
