@@ -36,7 +36,7 @@ public final class SummonEvents {
             player.displayClientMessage(Component.literal("O vínculo de invocação ainda está se recuperando."), true);
             return;
         }
-        int cost = type == ModEntities.PYREWING.get() ? 35 : type == ModEntities.FROSTMane.get() ? 40 : 45;
+        int cost = type == ModEntities.PYREWING.get() ? 35 : type == ModEntities.FROSTMANE.get() ? 40 : 45;
         if (data.mana() < cost) {
             player.displayClientMessage(Component.literal("Mana insuficiente para esta invocação."), true);
             return;
@@ -58,7 +58,7 @@ public final class SummonEvents {
     }
     private static EntityType<? extends Monster> summonFor(Item item) {
         if (item == ModItems.PYREWING_SIGIL.get()) return ModEntities.PYREWING.get();
-        if (item == ModItems.FROSTMane_SIGIL.get()) return ModEntities.FROSTMane.get();
+        if (item == ModItems.FROSTMANE_SIGIL.get()) return ModEntities.FROSTMANE.get();
         if (item == ModItems.TERRAGORN_SIGIL.get()) return ModEntities.TERRAGORN.get();
         return null;
     }
