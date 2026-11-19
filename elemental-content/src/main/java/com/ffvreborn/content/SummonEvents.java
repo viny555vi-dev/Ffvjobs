@@ -50,8 +50,8 @@ public final class SummonEvents {
             mob -> mob.isAlive() && !(mob instanceof FFVSummon)).stream().findFirst().orElse(null));
         player.level().addFreshEntity(creature);
         if (player.level() instanceof net.minecraft.server.level.ServerLevel level) {
-            level.sendParticles(ParticleTypes.END_ROD, creature.getX(), creature.getY() + 0.7, creature.getZ(), 35, 0.7, 0.8, 0.7, 0.08);
-            level.sendParticles(ParticleTypes.PORTAL, creature.getX(), creature.getY() + 0.5, creature.getZ(), 45, 0.6, 0.7, 0.6, 0.15);
+            level.sendParticles(ModParticles.AETHER_FLARE.get(), creature.getX(), creature.getY() + 0.7, creature.getZ(), 35, 0.7, 0.8, 0.7, 0.08);
+            level.sendParticles(ModParticles.RUNE_SPARK.get(), creature.getX(), creature.getY() + 0.5, creature.getZ(), 45, 0.6, 0.7, 0.6, 0.15);
         }
         READY_AT.put(player.getUUID(), now + 240);
         player.displayClientMessage(Component.literal("Invocação manifestada. Duração: 90 segundos."), true);
