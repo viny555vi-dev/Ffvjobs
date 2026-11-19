@@ -29,6 +29,8 @@ public final class FinalFantasyVReborn {
         TEST_FUNCTIONS.register("ability_progression", () -> FfvGameTests::abilityProgression);
     public static final DeferredHolder<Consumer<GameTestHelper>, Consumer<GameTestHelper>> SUMMON_ENTITY_TEST =
         TEST_FUNCTIONS.register("summon_entity", () -> FfvGameTests::summonEntitySpawn);
+    public static final DeferredHolder<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GAMEPAD_TEST =
+        TEST_FUNCTIONS.register("controller_mapping", () -> FfvGameTests::controllerMapping);
     public FinalFantasyVReborn(IEventBus modBus) {
         ModItems.ITEMS.register(modBus);
         ModBlocks.BLOCKS.register(modBus);
