@@ -14,6 +14,10 @@ public final class FinalFantasyVReborn {
     public static final DeferredHolder<Item, Item> CRYSTAL_OF_DAWN = ITEMS.registerSimpleItem("crystal_of_dawn");
     public static final DeferredRegister<Consumer<GameTestHelper>> TEST_FUNCTIONS =
         DeferredRegister.create(BuiltInRegistries.TEST_FUNCTION, MOD_ID);
+    public static final DeferredHolder<Consumer<GameTestHelper>, Consumer<GameTestHelper>> ITEM_TEST =
+        TEST_FUNCTIONS.register("item_registered", () -> FfvGameTests::itemRegistered);
+    public static final DeferredHolder<Consumer<GameTestHelper>, Consumer<GameTestHelper>> JOB_TEST =
+        TEST_FUNCTIONS.register("job_progress", () -> FfvGameTests::jobProgressWorks);
     public FinalFantasyVReborn(IEventBus modBus) {
         ITEMS.register(modBus);
         TEST_FUNCTIONS.register(modBus);
