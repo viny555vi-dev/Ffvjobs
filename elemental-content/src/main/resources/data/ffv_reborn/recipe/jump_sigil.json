@@ -1,15 +1,9 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:paper"
-    },
-    {
-      "item": "ffv_reborn:aether_shard"
-    },
-    {
-      "item": "minecraft:phantom_membrane"
-    }
+    "minecraft:paper",
+    "ffv_reborn:aether_shard",
+    "minecraft:phantom_membrane"
   ],
   "result": {
     "id": "ffv_reborn:jump_sigil",
