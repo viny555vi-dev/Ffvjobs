@@ -35,6 +35,7 @@ public final class FfvGameTests {
         register(event, "loot_balance", FinalFantasyVReborn.LOOT_TEST, data);
         register(event, "ability_progression", FinalFantasyVReborn.ABILITY_PROGRESS_TEST, data);
         register(event, "summon_entity", FinalFantasyVReborn.SUMMON_ENTITY_TEST, data);
+        register(event, "controller_mapping", FinalFantasyVReborn.GAMEPAD_TEST, data);
     }
     private static void register(RegisterGameTestsEvent event, String id,
         net.neoforged.neoforge.registries.DeferredHolder<java.util.function.Consumer<GameTestHelper>, java.util.function.Consumer<GameTestHelper>> function,
@@ -111,6 +112,23 @@ public final class FfvGameTests {
         helper.assertTrue(player.abp("black_mage") >= 2, "Learning did not spend ABP");
         player = player.spendMana(12);
         helper.assertTrue(player.mana() == 88, "Spell did not consume mana");
+        helper.succeed();
+    }
+
+    public static void controllerMapping(GameTestHelper helper) {
+        GamepadMapping.State input = GamepadMapping.map(0.8f, -0.8f, -0.5f, 0.4f,
+            0.7f, 0.8f, true, false, false, true, true);
+        helper.assertTrue(input.up() && input.right(), "Left stick directions were not mapped");
+        helper.assertTrue(input.jump() && input.attack() && input.use() && input.toggleCamera(),
+            "DualSense buttons and triggers were not mapped");
+        helper.assertTrue(Math.abs(input.yawDelta() - 1.6f) < 0.001f, "Right stick yaw mapping is incorrect");
+        helper.assertTrue(Math.abs(input.pitchDelta() - 1.08f) < 0.001f, "Right stick pitch mapping is incorrect");
+        GamepadMapping.State neutral = GamepadMapping.map(0.05f, -0.05f, 0.04f, -0.04f,
+            0.0f, 0.0f, false, false, false, false, false);
+        helper.assertTrue(!neutral.up() && !neutral.down() && !neutral.left() && !neutral.right(),
+            "Controller deadzone allowed stick drift");
+        helper.assertTrue(neutral.yawDelta() == 0.0f && neutral.pitchDelta() == 0.0f,
+            "Controller look deadzone allowed camera drift");
         helper.succeed();
     }
     public static void summonEntitySpawn(GameTestHelper helper) {
