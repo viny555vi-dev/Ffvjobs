@@ -33,7 +33,7 @@ The pack contains one installable mod JAR built from three communicating Gradle 
 - Aether Shards and rare weapons can drop from hostile mobs; relics are also added to simple dungeon chests
 
 **Presentation and controls**
-- Original procedural creature model animation
+- Four original procedural creature rigs: quadruped beast, spectral wisp, winged summon and humanoid guardian
 - Over-the-shoulder third-person camera: custom shoulder offset, 4.35-block follow distance, speed-aware FOV, subtle movement roll and tuned turn response
 - SDL3 gamepad bridge supports a directly connected DualSense and DualSenseX configured as an XInput controller
 
