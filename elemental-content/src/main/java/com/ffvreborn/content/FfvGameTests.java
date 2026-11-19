@@ -2,11 +2,8 @@ package com.ffvreborn.content;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import com.ffvreborn.abilities.AbilityDefinition;
-import com.ffvreborn.abilities.AbilityService;
-import com.ffvreborn.core.JobDefinition;
-import com.ffvreborn.core.JobService;
-import com.ffvreborn.core.PlayerRpgData;
+import java.util.Random;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.gametest.framework.FunctionGameTestInstance;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -14,6 +11,12 @@ import net.minecraft.gametest.framework.TestData;
 import net.minecraft.gametest.framework.TestEnvironmentDefinition;
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.event.RegisterGameTestsEvent;
+import com.ffvreborn.abilities.AbilityDefinition;
+import com.ffvreborn.abilities.AbilityService;
+import com.ffvreborn.core.JobDefinition;
+import com.ffvreborn.core.JobService;
+import com.ffvreborn.core.PlayerProgression;
+import com.ffvreborn.core.PlayerRpgData;
 public final class FfvGameTests {
     private FfvGameTests() {}
     public static void registerTests(RegisterGameTestsEvent event) {
@@ -27,17 +30,20 @@ public final class FfvGameTests {
         register(event, "job_progress", FinalFantasyVReborn.JOB_TEST, data);
         register(event, "ability_cast", FinalFantasyVReborn.ABILITY_TEST, data);
         register(event, "summon_cast", FinalFantasyVReborn.SUMMON_TEST, data);
+        register(event, "combat_progression", FinalFantasyVReborn.PROGRESSION_TEST, data);
+        register(event, "bestiary_spawn", FinalFantasyVReborn.BESTIARY_TEST, data);
+        register(event, "loot_balance", FinalFantasyVReborn.LOOT_TEST, data);
     }
     private static void register(RegisterGameTestsEvent event, String id,
         net.neoforged.neoforge.registries.DeferredHolder<java.util.function.Consumer<GameTestHelper>, java.util.function.Consumer<GameTestHelper>> function,
         TestData<Holder<TestEnvironmentDefinition<?>>> data) {
-        event.registerTest(
-            Identifier.fromNamespaceAndPath(FinalFantasyVReborn.MOD_ID, id),
-            new FunctionGameTestInstance(function.getKey(), data)
-        );
+        event.registerTest(Identifier.fromNamespaceAndPath(FinalFantasyVReborn.MOD_ID, id),
+            new FunctionGameTestInstance(function.getKey(), data));
     }
     public static void itemRegistered(GameTestHelper helper) {
-        helper.assertTrue(FinalFantasyVReborn.CRYSTAL_OF_DAWN.isBound(), "Crystal of Dawn registry object was not bound");
+        helper.assertTrue(ModItems.CRYSTAL_OF_DAWN.isBound(), "Crystal of Dawn was not registered");
+        helper.assertTrue(ModItems.EMBERSTEEL_BLADE.isBound(), "Embersteel Blade was not registered");
+        helper.assertTrue(ModItems.AETHER_SHARD.isBound(), "Aether Shard was not registered");
         helper.succeed();
     }
     public static void jobProgressWorks(GameTestHelper helper) {
@@ -68,12 +74,38 @@ public final class FfvGameTests {
     public static void summonCanBeInvoked(GameTestHelper helper) {
         PlayerRpgData player = new PlayerRpgData(UUID.randomUUID());
         player.setActiveJob("summoner");
-        SummonService summons = new SummonService(List.of(
-            new SummonService.Summon("ifrit", 25, 100, 1, "fire_burst")
-        ));
+        SummonService summons = new SummonService(List.of(new SummonService.Summon("ifrit", 25, 100, 1, "fire_burst")));
         String effect = summons.invoke(player, "ifrit", 10);
         helper.assertTrue("fire_burst".equals(effect), "Ifrit returned the wrong effect");
         helper.assertTrue(player.mana() == 75, "Ifrit did not consume 25 mana");
+        helper.succeed();
+    }
+    public static void combatProgression(GameTestHelper helper) {
+        PlayerProgression player = PlayerProgression.fresh().withJob("knight").awardKillXp(135);
+        helper.assertTrue(player.level("knight") == 2, "Kill XP did not level the active job");
+        helper.assertTrue(player.level("freelancer") == 1, "Kill XP leaked to another job");
+        helper.assertTrue(player.abp("knight") == 2, "Level-up did not award ABP");
+        helper.assertTrue(CombatLoot.xpForKill(24, true) == 60, "Mob XP formula returned an unexpected value");
+        helper.succeed();
+    }
+    public static void bestiarySpawn(GameTestHelper helper) {
+        helper.assertTrue(ModEntities.CINDER_WOLF.isBound(), "Cinder Wolf type is missing");
+        helper.assertTrue(ModEntities.MIRE_HAG.isBound(), "Mire Hag type is missing");
+        helper.assertTrue(ModEntities.AETHER_WISP.isBound(), "Aether Wisp type is missing");
+        var mob = helper.spawn(ModEntities.CINDER_WOLF.get(), new BlockPos(2, 1, 2));
+        helper.assertTrue(mob.isAlive(), "Cinder Wolf failed to spawn in a live test world");
+        helper.succeed();
+    }
+    public static void lootBalance(GameTestHelper helper) {
+        Random random = new Random(7319);
+        int shards = 0, weapons = 0;
+        for (int i = 0; i < 10000; i++) {
+            CombatLoot.Drop drop = CombatLoot.roll(random, 0);
+            if (drop == CombatLoot.Drop.AETHER_SHARD) shards++;
+            else if (drop != CombatLoot.Drop.NONE) weapons++;
+        }
+        helper.assertTrue(shards > 700 && shards < 1200, "Aether shard drop chance is outside expected balance");
+        helper.assertTrue(weapons > 80 && weapons < 180, "Rare weapon drop chance is outside expected balance");
         helper.succeed();
     }
 }
