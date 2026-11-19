@@ -25,6 +25,22 @@ jobs:
         run: gradle build --no-daemon --stacktrace
       - name: Launch real Minecraft 26.3 NeoForge GameTestServer
         run: gradle :elemental-content:runGameTestServer --no-daemon --stacktrace
+      - name: Install virtual display and software rendering
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb libgl1-mesa-dri
+      - name: Launch Minecraft client renderer and camera smoke test
+        run: |
+          set +e
+          timeout 90s xvfb-run -a env LIBGL_ALWAYS_SOFTWARE=1 gradle :elemental-content:runClient --no-daemon --stacktrace 2>&1 | tee client-smoke.log
+          status=${PIPESTATUS[0]}
+          set -e
+          if [ "$status" -ne 124 ] && [ "$status" -ne 0 ]; then
+            cat client-smoke.log
+            exit "$status"
+          fi
+          grep -q "Final Fantasy V Reborn 1.0.0" client-smoke.log
+          grep -q "NeoForge mod loading, version 26.3.0.95" client-smoke.log
       - name: Assemble installable modpack
         run: |
           mkdir -p dist/overrides/mods
@@ -46,4 +62,5 @@ jobs:
           path: |
             **/logs/**
             **/crash-reports/**
+            client-smoke.log
           if-no-files-found: warn
