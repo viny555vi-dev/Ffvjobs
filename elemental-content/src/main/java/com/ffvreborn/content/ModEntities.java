@@ -22,7 +22,7 @@ public final class ModEntities {
     private ModEntities() {}
     public static void register(IEventBus bus) {
         ENTITIES.register(bus);
-        bus.addListener(ModEntities::attributes);
+        bus.<EntityAttributeCreationEvent>addListener(ModEntities::attributes);
     }
     private static void attributes(EntityAttributeCreationEvent event) {
         event.put(CINDER_WOLF.get(), attributes(24, 4.5, 0.31).build());
