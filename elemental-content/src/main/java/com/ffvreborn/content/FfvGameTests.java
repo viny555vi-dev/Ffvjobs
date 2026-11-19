@@ -46,6 +46,9 @@ public final class FfvGameTests {
         helper.assertTrue(ModItems.CRYSTAL_OF_DAWN.isBound(), "Crystal of Dawn was not registered");
         helper.assertTrue(ModItems.EMBERSTEEL_BLADE.isBound(), "Embersteel Blade was not registered");
         helper.assertTrue(ModItems.AETHER_SHARD.isBound(), "Aether Shard was not registered");
+        helper.assertTrue(ModBlocks.AETHER_PRISM.isBound(), "Aether Prism particle material was not registered");
+        helper.assertTrue(ModBlocks.FROST_PRISM.isBound(), "Frost Prism particle material was not registered");
+        helper.assertTrue(ModBlocks.RUNE_PRISM.isBound(), "Rune Prism particle material was not registered");
         helper.succeed();
     }
     public static void jobProgressWorks(GameTestHelper helper) {
