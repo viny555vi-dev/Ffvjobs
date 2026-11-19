@@ -35,7 +35,7 @@ public final class CombatEvents {
         Entity attacker = event.getSource().getEntity();
         if (!(attacker instanceof ServerPlayer player) || !(victim instanceof Monster)) return;
         float luck = (float) player.getLuck();
-        CombatLoot.Drop drop = CombatLoot.roll(victim.getRandom(), luck);
+        CombatLoot.Drop drop = CombatLoot.roll(new java.util.Random(victim.getRandom().nextLong()), luck);
         if (drop == CombatLoot.Drop.NONE) return;
         var item = switch (drop) {
             case AETHER_SHARD -> ModItems.AETHER_SHARD.get();
