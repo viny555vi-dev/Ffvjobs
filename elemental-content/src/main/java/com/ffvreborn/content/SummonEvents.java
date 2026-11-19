@@ -45,7 +45,8 @@ public final class SummonEvents {
         player.syncData(RpgAttachments.PLAYER);
         FFVSummon creature = new FFVSummon(type, player.level());
         creature.bindSummoner(player.getUUID());
-        creature.moveTo(player.getX() + 1.2, player.getY(), player.getZ() + 0.8, player.getYRot(), 0);
+        creature.setPos(player.getX() + 1.2, player.getY(), player.getZ() + 0.8);
+        creature.setYRot(player.getYRot());
         creature.setTarget(player.level().getEntitiesOfClass(Monster.class, player.getBoundingBox().inflate(14),
             mob -> mob.isAlive() && !(mob instanceof FFVSummon)).stream().findFirst().orElse(null));
         player.level().addFreshEntity(creature);
