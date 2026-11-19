@@ -21,7 +21,7 @@ public final class ModEntities {
         ENTITIES.registerEntityType("aether_wisp", FFVMonster::new, MobCategory.MONSTER, b -> b.sized(0.75f, 1.2f).clientTrackingRange(10).updateInterval(2));
     public static final DeferredHolder<EntityType<?>, EntityType<FFVSummon>> PYREWING =
         ENTITIES.registerEntityType("pyrewing", FFVSummon::new, MobCategory.CREATURE, b -> b.sized(0.95f, 1.35f).clientTrackingRange(10).updateInterval(2));
-    public static final DeferredHolder<EntityType<?>, EntityType<FFVSummon>> FROSTMane =
+    public static final DeferredHolder<EntityType<?>, EntityType<FFVSummon>> FROSTMANE =
         ENTITIES.registerEntityType("frostmane", FFVSummon::new, MobCategory.CREATURE, b -> b.sized(1.0f, 1.25f).clientTrackingRange(10).updateInterval(2));
     public static final DeferredHolder<EntityType<?>, EntityType<FFVSummon>> TERRAGORN =
         ENTITIES.registerEntityType("terragorn", FFVSummon::new, MobCategory.CREATURE, b -> b.sized(1.25f, 1.65f).clientTrackingRange(10).updateInterval(2));
@@ -35,7 +35,7 @@ public final class ModEntities {
         event.put(MIRE_HAG.get(), attributes(34, 6.0, 0.22).build());
         event.put(AETHER_WISP.get(), attributes(18, 3.0, 0.38).build());
         event.put(PYREWING.get(), attributes(36, 7.0, 0.34).build());
-        event.put(FROSTMane.get(), attributes(42, 6.0, 0.30).build());
+        event.put(FROSTMANE.get(), attributes(42, 6.0, 0.30).build());
         event.put(TERRAGORN.get(), attributes(58, 9.0, 0.20).build());
     }
     private static AttributeSupplier.Builder attributes(double health, double damage, double speed) {
