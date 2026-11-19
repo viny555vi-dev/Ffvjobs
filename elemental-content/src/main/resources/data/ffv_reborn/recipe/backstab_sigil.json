@@ -1,15 +1,9 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:paper"
-    },
-    {
-      "item": "ffv_reborn:aether_shard"
-    },
-    {
-      "item": "minecraft:ink_sac"
-    }
+    "minecraft:paper",
+    "ffv_reborn:aether_shard",
+    "minecraft:ink_sac"
   ],
   "result": {
     "id": "ffv_reborn:backstab_sigil",
