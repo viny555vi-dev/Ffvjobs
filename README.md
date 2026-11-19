@@ -15,7 +15,7 @@ The build is split into three Gradle modules and packaged as one installable Neo
 - Three temporary allied summons: Pyrewing, Frostmane and Terragorn.
 - Four rare weapons and Aether Shards, dropped by hostiles and added to simple dungeon chests.
 - Three custom elemental particle groups and procedural creature animation.
-- Third-person adventure camera tuning and SDL3 controller input for DualSense / DualSenseX XInput mode.
+- Over-the-shoulder third-person adventure camera mixin, dynamic follow distance/FOV/roll, and SDL3 controller input for DualSense / DualSenseX XInput mode.
 
 Bosses are intentionally excluded from this release.
 
