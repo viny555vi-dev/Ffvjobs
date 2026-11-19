@@ -25,43 +25,22 @@ jobs:
         run: gradle build --no-daemon --stacktrace
       - name: Launch real Minecraft 26.3 NeoForge GameTestServer
         run: gradle :elemental-content:runGameTestServer --no-daemon --stacktrace
-      - name: Install software X server and Mesa renderer
+      - name: Install headless Wayland and Mesa renderer
         run: |
           sudo apt-get update
-          sudo apt-get install -y xserver-xorg-core xserver-xorg-video-dummy libgl1-mesa-dri libglx-mesa0 x11-utils
-          cat > /tmp/ffv-xorg.conf <<'EOF'
-          Section "Device"
-            Identifier "FFVDummy"
-            Driver "dummy"
-            VideoRam 256000
-          EndSection
-          Section "Monitor"
-            Identifier "FFVMonitor"
-            HorizSync 30-70
-            VertRefresh 50-75
-            Modeline "1280x1024" 108.00 1280 1328 1440 1688 1024 1025 1028 1066
-          EndSection
-          Section "Screen"
-            Identifier "FFVScreen"
-            Device "FFVDummy"
-            Monitor "FFVMonitor"
-            DefaultDepth 24
-            SubSection "Display"
-              Depth 24
-              Modes "1280x1024"
-            EndSubSection
-          EndSection
-          EOF
-          sudo Xorg :99 -noreset +extension GLX +extension RANDR -config /tmp/ffv-xorg.conf -logfile /tmp/ffv-xorg.log &
-          for i in $(seq 1 30); do
-            if DISPLAY=:99 xdpyinfo >/dev/null 2>&1; then break; fi
+          sudo apt-get install -y weston xwayland libgl1-mesa-dri libegl1-mesa libwayland-egl1 mesa-vulkan-drivers
+          mkdir -p /tmp/ffv-runtime
+          chmod 700 /tmp/ffv-runtime
+          XDG_RUNTIME_DIR=/tmp/ffv-runtime weston --backend=headless --renderer=gl --socket=wayland-1 --idle-time=0 --width=1280 --height=720 --log=/tmp/ffv-weston.log >/tmp/ffv-weston.stdout 2>&1 &
+          for i in $(seq 1 45); do
+            if [ -S /tmp/ffv-runtime/wayland-1 ]; then break; fi
             sleep 1
           done
-          DISPLAY=:99 xdpyinfo >/dev/null
+          test -S /tmp/ffv-runtime/wayland-1
       - name: Launch Minecraft client renderer and camera smoke test
         run: |
           set +e
-          DISPLAY=:99 LIBGL_ALWAYS_SOFTWARE=1 MESA_LOADER_DRIVER_OVERRIDE=llvmpipe timeout -k 5s 60s gradle :elemental-content:runClient --no-daemon --stacktrace 2>&1 | tee client-smoke.log
+          XDG_RUNTIME_DIR=/tmp/ffv-runtime WAYLAND_DISPLAY=wayland-1 SDL_VIDEODRIVER=wayland LIBGL_ALWAYS_SOFTWARE=1 MESA_LOADER_DRIVER_OVERRIDE=llvmpipe timeout -k 5s 60s gradle :elemental-content:runClient --no-daemon --stacktrace 2>&1 | tee client-smoke.log
           status=${PIPESTATUS[0]}
           set -e
           if [ "$status" -ne 124 ] && [ "$status" -ne 0 ]; then
