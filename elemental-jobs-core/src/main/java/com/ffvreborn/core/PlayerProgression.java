@@ -1,21 +1,9 @@
 package com.ffvreborn.core;
-
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.Map;
 import java.util.TreeMap;
-
 /** Persistent, server-authoritative progression earned by defeating creatures. */
 public record PlayerProgression(String activeJob, Map<String, Long> xpByJob,
         Map<String, Integer> levelsByJob, Map<String, Integer> abpByJob, int mana) {
-    public static final com.mojang.serialization.MapCodec<PlayerProgression> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-        Codec.STRING.optionalFieldOf("active_job", "freelancer").forGetter(PlayerProgression::activeJob),
-        Codec.unboundedMap(Codec.STRING, Codec.LONG).optionalFieldOf("xp", Map.of()).forGetter(PlayerProgression::xpByJob),
-        Codec.unboundedMap(Codec.STRING, Codec.INT).optionalFieldOf("levels", Map.of("freelancer", 1)).forGetter(PlayerProgression::levelsByJob),
-        Codec.unboundedMap(Codec.STRING, Codec.INT).optionalFieldOf("abp", Map.of()).forGetter(PlayerProgression::abpByJob),
-        Codec.INT.optionalFieldOf("mana", 100).forGetter(PlayerProgression::mana)
-    ).apply(instance, PlayerProgression::new));
-
     public PlayerProgression {
         if (activeJob == null || !activeJob.matches("[a-z0-9_]+") || mana < 0 || mana > 500) throw new IllegalArgumentException("Invalid player progression");
         xpByJob = Map.copyOf(xpByJob);
@@ -40,12 +28,10 @@ public record PlayerProgression(String activeJob, Map<String, Long> xpByJob,
         while (level < 50) {
             long threshold = 100L + (long) level * level * 35L;
             if (total < threshold) break;
-            total -= threshold;
-            level++;
+            total -= threshold; level++;
             abp.merge(activeJob, 2 + level / 5, Math::addExact);
         }
-        xp.put(activeJob, total);
-        levels.put(activeJob, level);
+        xp.put(activeJob, total); levels.put(activeJob, level);
         return new PlayerProgression(activeJob, xp, levels, abp, mana);
     }
     public PlayerProgression withMana(int value) {
