@@ -54,6 +54,7 @@ jobs:
           fi
           grep -q "Final Fantasy V Reborn 1.0.0" client-smoke.log
           grep -q "NeoForge mod loading, version 26.3.0.95" client-smoke.log
+          grep -q "Using graphics backend OpenGL" client-smoke.log
       - name: Assemble installable modpack
         run: |
           mkdir -p dist/overrides/mods
