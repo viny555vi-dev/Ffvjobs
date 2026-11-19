@@ -27,6 +27,7 @@ jobs:
         run: gradle :elemental-content:runGameTestServer --no-daemon --stacktrace
       - name: Install headless Wayland and Mesa renderer
         run: |
+          sudo apt-get update -o Acquire::Retries=5 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30
           sudo apt-get install -y --no-install-recommends weston xwayland libgl1-mesa-dri libegl1 libwayland-egl1 mesa-vulkan-drivers
           mkdir -p /tmp/ffv-runtime
           chmod 700 /tmp/ffv-runtime
