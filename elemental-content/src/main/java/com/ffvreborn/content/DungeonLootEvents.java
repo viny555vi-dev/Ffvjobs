@@ -4,7 +4,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.ContextIntProviders;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.LootTableLoadEvent;
@@ -18,7 +18,7 @@ public final class DungeonLootEvents {
     public static void addDungeonRelics(LootTableLoadEvent event) {
         if (!SIMPLE_DUNGEON.equals(event.getName())) return;
         LootPool relics = LootPool.lootPool().name("ffv_reborn_dungeon_relics")
-            .setRolls(ConstantValue.exactly(1))
+            .setRolls(ContextIntProviders.exactly(1))
             .add(LootItem.lootTableItem(ModItems.AETHER_SHARD.get()).setWeight(7))
             .add(LootItem.lootTableItem(ModItems.EMBERSTEEL_BLADE.get()).setWeight(2))
             .add(LootItem.lootTableItem(ModItems.TIDEGLASS_STAFF.get()).setWeight(2))
