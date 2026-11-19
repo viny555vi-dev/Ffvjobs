@@ -78,13 +78,13 @@ public final class SpellEvents {
             mob -> mob.isAlive() && mob.distanceToSqr(player) <= 100)
             .stream().min(Comparator.comparingDouble(player::distanceToSqr)).orElse(null);
         switch (effect) {
-            case "fire_burst" -> damageTarget(player, target, level, 8.0f, ModParticles.AETHER_FLARE.get());
+            case "fire_burst" -> damageTarget(player, target, level, 8.0f, ModParticles.AETHER_FLARE.get(), true);
             case "frost_lance" -> {
                 damageTarget(player, target, level, 7.0f, ModParticles.FROST_SHARD.get(), false);
                 if (target != null) target.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 100, 1));
             }
             case "storm_arc" -> damageTarget(player, target, level, 11.0f, ModParticles.RUNE_SPARK.get(), false);
-            case "aether_flare" -> damageTarget(player, target, level, 22.0f, ModParticles.AETHER_FLARE.get());
+            case "aether_flare" -> damageTarget(player, target, level, 22.0f, ModParticles.AETHER_FLARE.get(), true);
             case "mending_light" -> { player.heal(8.0f); burst(level, player, ModParticles.RUNE_SPARK.get(), 24); }
             case "verdant_regrowth" -> { player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 1)); burst(level, player, ModParticles.RUNE_SPARK.get(), 30); }
             case "quickening" -> { player.addEffect(new MobEffectInstance(MobEffects.SPEED, 240, 1)); burst(level, player, ModParticles.RUNE_SPARK.get(), 20); }
