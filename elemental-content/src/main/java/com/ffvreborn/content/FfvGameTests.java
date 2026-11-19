@@ -45,6 +45,7 @@ public final class FfvGameTests {
     public static void itemRegistered(GameTestHelper helper) {
         helper.assertTrue(ModItems.CRYSTAL_OF_DAWN.isBound(), "Crystal of Dawn was not registered");
         helper.assertTrue(ModItems.EMBERSTEEL_BLADE.isBound(), "Embersteel Blade was not registered");
+        helper.assertTrue(ModItems.VERDANT_LONGBOW.get() instanceof net.minecraft.world.item.BowItem, "Verdant Longbow is not a functional bow item");
         helper.assertTrue(ModItems.AETHER_SHARD.isBound(), "Aether Shard was not registered");
         helper.assertTrue(ModBlocks.AETHER_PRISM.isBound(), "Aether Prism particle material was not registered");
         helper.assertTrue(ModBlocks.FROST_PRISM.isBound(), "Frost Prism particle material was not registered");
