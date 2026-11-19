@@ -32,7 +32,7 @@ jobs:
       - name: Launch Minecraft client renderer and camera smoke test
         run: |
           set +e
-          timeout 90s xvfb-run -a env LIBGL_ALWAYS_SOFTWARE=1 gradle :elemental-content:runClient --no-daemon --stacktrace 2>&1 | tee client-smoke.log
+          xvfb-run -a env LIBGL_ALWAYS_SOFTWARE=1 timeout -k 5s 60s gradle :elemental-content:runClient --no-daemon --stacktrace 2>&1 | tee client-smoke.log
           status=${PIPESTATUS[0]}
           set -e
           if [ "$status" -ne 124 ] && [ "$status" -ne 0 ]; then
