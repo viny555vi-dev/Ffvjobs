@@ -29,7 +29,7 @@ public final class DualSenseController {
             wasConnected = false;
             return;
         }
-        if (minecraft.player == null || minecraft.screen != null) {
+        if (minecraft.player == null) {
             clear(minecraft.options);
             return;
         }
