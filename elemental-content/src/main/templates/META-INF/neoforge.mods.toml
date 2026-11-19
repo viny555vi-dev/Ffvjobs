@@ -1,0 +1,20 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="${mod_license}"
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+description='''Final Fantasy V inspired jobs, abilities and summons for Minecraft.'''
+[[dependencies.${mod_id}]]
+modId="neoforge"
+type="required"
+versionRange="[26.3.0.95,)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.${mod_id}]]
+modId="minecraft"
+type="required"
+versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="BOTH"
