@@ -36,3 +36,9 @@ def generateModMetadata = tasks.register('generateModMetadata', ProcessResources
 }
 sourceSets.main.resources.srcDir generateModMetadata
 tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+
+jar {
+    from project(':elemental-jobs-core').sourceSets.main.output
+    from project(':elemental-abilities').sourceSets.main.output
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
