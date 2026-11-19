@@ -4,7 +4,6 @@ import java.nio.IntBuffer;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
-import net.minecraft.util.Mth;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -35,28 +34,26 @@ public final class DualSenseController {
         }
         wasConnected = true;
         Options options = minecraft.options;
-        float x = axis(SDLGamepad.SDL_GAMEPAD_AXIS_LEFTX);
-        float y = axis(SDLGamepad.SDL_GAMEPAD_AXIS_LEFTY);
-        set(options.keyUp, y < -0.24f);
-        set(options.keyDown, y > 0.24f);
-        set(options.keyLeft, x < -0.24f);
-        set(options.keyRight, x > 0.24f);
-        boolean south = button(SDLGamepad.SDL_GAMEPAD_BUTTON_SOUTH);
-        boolean east = button(SDLGamepad.SDL_GAMEPAD_BUTTON_EAST);
-        boolean west = button(SDLGamepad.SDL_GAMEPAD_BUTTON_WEST);
-        boolean north = button(SDLGamepad.SDL_GAMEPAD_BUTTON_NORTH);
-        float leftTrigger = axis(SDLGamepad.SDL_GAMEPAD_AXIS_LEFT_TRIGGER);
-        float rightTrigger = axis(SDLGamepad.SDL_GAMEPAD_AXIS_RIGHT_TRIGGER);
-        set(options.keyJump, south);
-        set(options.keySprint, east);
-        set(options.keyAttack, west || rightTrigger > 0.35f);
-        set(options.keyUse, north || leftTrigger > 0.35f);
-        set(options.keyTogglePerspective, button(SDLGamepad.SDL_GAMEPAD_BUTTON_TOUCHPAD));
-        float rx = deadzone(axis(SDLGamepad.SDL_GAMEPAD_AXIS_RIGHTX));
-        float ry = deadzone(axis(SDLGamepad.SDL_GAMEPAD_AXIS_RIGHTY));
-        if (Math.abs(rx) + Math.abs(ry) > 0.02f) {
-            minecraft.player.setYRot(minecraft.player.getYRot() - rx * 3.2f);
-            minecraft.player.setXRot(Mth.clamp(minecraft.player.getXRot() + ry * 2.7f, -89.0f, 89.0f));
+        GamepadMapping.State input = GamepadMapping.map(
+            axis(SDLGamepad.SDL_GAMEPAD_AXIS_LEFTX), axis(SDLGamepad.SDL_GAMEPAD_AXIS_LEFTY),
+            axis(SDLGamepad.SDL_GAMEPAD_AXIS_RIGHTX), axis(SDLGamepad.SDL_GAMEPAD_AXIS_RIGHTY),
+            axis(SDLGamepad.SDL_GAMEPAD_AXIS_LEFT_TRIGGER), axis(SDLGamepad.SDL_GAMEPAD_AXIS_RIGHT_TRIGGER),
+            button(SDLGamepad.SDL_GAMEPAD_BUTTON_SOUTH), button(SDLGamepad.SDL_GAMEPAD_BUTTON_EAST),
+            button(SDLGamepad.SDL_GAMEPAD_BUTTON_WEST), button(SDLGamepad.SDL_GAMEPAD_BUTTON_NORTH),
+            button(SDLGamepad.SDL_GAMEPAD_BUTTON_TOUCHPAD));
+        set(options.keyUp, input.up());
+        set(options.keyDown, input.down());
+        set(options.keyLeft, input.left());
+        set(options.keyRight, input.right());
+        set(options.keyJump, input.jump());
+        set(options.keySprint, input.sprint());
+        set(options.keyAttack, input.attack());
+        set(options.keyUse, input.use());
+        set(options.keyTogglePerspective, input.toggleCamera());
+        if (Math.abs(input.yawDelta()) + Math.abs(input.pitchDelta()) > 0.02f) {
+            minecraft.player.setYRot(minecraft.player.getYRot() + input.yawDelta());
+            minecraft.player.setXRot(net.minecraft.util.Mth.clamp(
+                minecraft.player.getXRot() + input.pitchDelta(), -89.0f, 89.0f));
         }
     }
 
@@ -77,9 +74,8 @@ public final class DualSenseController {
     private static float axis(int axis) {
         if (pad == 0L) return 0.0f;
         float value = SDLGamepad.SDL_GetGamepadAxis(pad, axis) / 32767.0f;
-        return Math.abs(value) < 0.16f ? 0.0f : Mth.clamp(value, -1.0f, 1.0f);
+        return net.minecraft.util.Mth.clamp(value, -1.0f, 1.0f);
     }
-    private static float deadzone(float value) { return Math.abs(value) < 0.12f ? 0.0f : value; }
     private static boolean button(int button) { return pad != 0L && SDLGamepad.SDL_GetGamepadButton(pad, button); }
     private static void set(KeyMapping mapping, boolean pressed) { KeyMapping.set(mapping.getKey(), pressed); }
     private static void clear(Options o) {
