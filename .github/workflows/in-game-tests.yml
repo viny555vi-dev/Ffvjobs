@@ -28,7 +28,7 @@ jobs:
       - name: Install headless Wayland and Mesa renderer
         run: |
           sudo apt-get update
-          sudo apt-get install -y weston xwayland libgl1-mesa-dri libegl1-mesa libwayland-egl1 mesa-vulkan-drivers
+          sudo apt-get install -y weston xwayland libgl1-mesa-dri libegl1 libwayland-egl1 mesa-vulkan-drivers
           mkdir -p /tmp/ffv-runtime
           chmod 700 /tmp/ffv-runtime
           XDG_RUNTIME_DIR=/tmp/ffv-runtime weston --backend=headless --renderer=gl --socket=wayland-1 --idle-time=0 --width=1280 --height=720 --log=/tmp/ffv-weston.log >/tmp/ffv-weston.stdout 2>&1 &
