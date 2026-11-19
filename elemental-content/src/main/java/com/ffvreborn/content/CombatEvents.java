@@ -21,8 +21,6 @@ public final class CombatEvents {
         LivingEntity victim = event.getEntity();
         Entity attacker = event.getSource().getEntity();
         if (!(attacker instanceof ServerPlayer player) || !(victim instanceof Monster)) return;
-        if (victim.getType() == net.minecraft.world.entity.EntityType.ENDER_DRAGON ||
-            victim.getType() == net.minecraft.world.entity.EntityType.WITHER) return;
         PlayerProgression current = player.getData(RpgAttachments.PLAYER);
         int xp = CombatLoot.xpForKill(victim.getMaxHealth(), true);
         player.setData(RpgAttachments.PLAYER, current.awardKillXp(xp));
