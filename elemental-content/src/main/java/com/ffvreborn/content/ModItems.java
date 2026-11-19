@@ -24,5 +24,8 @@ public final class ModItems {
     public static final DeferredHolder<Item, Item> CHAKRA_SIGIL = ITEMS.registerSimpleItem("chakra_sigil");
     public static final DeferredHolder<Item, Item> JUMP_SIGIL = ITEMS.registerSimpleItem("jump_sigil");
     public static final DeferredHolder<Item, Item> SHURIKEN_SIGIL = ITEMS.registerSimpleItem("shuriken_sigil");
+    public static final DeferredHolder<Item, Item> PYREWING_SIGIL = ITEMS.registerSimpleItem("pyrewing_sigil");
+    public static final DeferredHolder<Item, Item> FROSTMane_SIGIL = ITEMS.registerSimpleItem("frostmane_sigil");
+    public static final DeferredHolder<Item, Item> TERRAGORN_SIGIL = ITEMS.registerSimpleItem("terragorn_sigil");
     private ModItems() {}
 }
