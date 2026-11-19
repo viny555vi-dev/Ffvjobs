@@ -8,5 +8,5 @@
   "requiredMods": ["ffv_reborn"],
   "bossesEnabled": false,
   "modulesBundled": ["elemental-jobs-core", "elemental-abilities", "elemental-content"],
-  "gameTestsRequired": 9
+  "gameTestsRequired": 10
 }
