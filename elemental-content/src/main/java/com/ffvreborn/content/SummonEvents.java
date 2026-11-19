@@ -28,17 +28,17 @@ public final class SummonEvents {
         event.setCancellationResult(InteractionResult.SUCCESS);
         PlayerProgression data = player.getData(RpgAttachments.PLAYER);
         if (!"summoner".equals(data.activeJob())) {
-            player.displayClientMessage(Component.literal("A profissão Invocador é necessária."), true);
+            player.sendSystemMessage(Component.literal("A profissão Invocador é necessária."));
             return;
         }
         long now = player.level().getGameTime();
         if (now < READY_AT.getOrDefault(player.getUUID(), 0L)) {
-            player.displayClientMessage(Component.literal("O vínculo de invocação ainda está se recuperando."), true);
+            player.sendSystemMessage(Component.literal("O vínculo de invocação ainda está se recuperando."));
             return;
         }
         int cost = type == ModEntities.PYREWING.get() ? 35 : type == ModEntities.FROSTMANE.get() ? 40 : 45;
         if (data.mana() < cost) {
-            player.displayClientMessage(Component.literal("Mana insuficiente para esta invocação."), true);
+            player.sendSystemMessage(Component.literal("Mana insuficiente para esta invocação."));
             return;
         }
         player.setData(RpgAttachments.PLAYER, data.spendMana(cost));
@@ -54,7 +54,7 @@ public final class SummonEvents {
             level.sendParticles(ModParticles.RUNE_SPARK.get(), creature.getX(), creature.getY() + 0.5, creature.getZ(), 45, 0.6, 0.7, 0.6, 0.15);
         }
         READY_AT.put(player.getUUID(), now + 240);
-        player.displayClientMessage(Component.literal("Invocação manifestada. Duração: 90 segundos."), true);
+        player.sendSystemMessage(Component.literal("Invocação manifestada. Duração: 90 segundos."));
     }
     private static EntityType<? extends Monster> summonFor(Item item) {
         if (item == ModItems.PYREWING_SIGIL.get()) return ModEntities.PYREWING.get();
