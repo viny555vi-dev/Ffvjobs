@@ -1,0 +1,26 @@
+plugins { id 'net.neoforged.moddev' }
+base { archivesName = mod_id }
+java { toolchain { languageVersion = JavaLanguageVersion.of(25) } }
+dependencies {
+    implementation project(':elemental-jobs-core')
+    implementation project(':elemental-abilities')
+}
+neoForge {
+    version = project.neo_version
+    runs {
+        server {
+            server()
+            programArgument '--nogui'
+        }
+        gameTestServer {
+            type = 'gameTestServer'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+        client { client() }
+    }
+    mods {
+        ffv_reborn { sourceSet(sourceSets.main) }
+    }
+}
+sourceSets.main.resources.srcDir('src/generated/resources')
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
