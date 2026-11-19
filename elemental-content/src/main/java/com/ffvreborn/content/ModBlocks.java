@@ -8,10 +8,10 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(FinalFantasyVReborn.MOD_ID);
     public static final DeferredHolder<Block, Block> AETHER_PRISM = BLOCKS.registerSimpleBlock("aether_prism",
-        BlockBehaviour.Properties.of().strength(1.5f).sound(SoundType.AMETHYST_CLUSTER).lightLevel(state -> 9).noLootTable());
+        () -> BlockBehaviour.Properties.of().strength(1.5f).sound(SoundType.AMETHYST_CLUSTER).lightLevel(state -> 9).noLootTable());
     public static final DeferredHolder<Block, Block> FROST_PRISM = BLOCKS.registerSimpleBlock("frost_prism",
-        BlockBehaviour.Properties.of().strength(1.5f).sound(SoundType.GLASS).lightLevel(state -> 5).noLootTable());
+        () -> BlockBehaviour.Properties.of().strength(1.5f).sound(SoundType.GLASS).lightLevel(state -> 5).noLootTable());
     public static final DeferredHolder<Block, Block> RUNE_PRISM = BLOCKS.registerSimpleBlock("rune_prism",
-        BlockBehaviour.Properties.of().strength(1.5f).sound(SoundType.AMETHYST_CLUSTER).lightLevel(state -> 7).noLootTable());
+        () -> BlockBehaviour.Properties.of().strength(1.5f).sound(SoundType.AMETHYST_CLUSTER).lightLevel(state -> 7).noLootTable());
     private ModBlocks() {}
 }
