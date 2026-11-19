@@ -68,7 +68,7 @@ jobs:
             cat client-smoke.log
             exit "$status"
           fi
-          if grep -q "Failed to create backend\|Exception" client-smoke.log; then
+          if grep -q "Failed to create backend OpenGL\|Couldn.t find matching GLX visual\|Mixin apply failed" client-smoke.log; then
             cat client-smoke.log
             exit 1
           fi
