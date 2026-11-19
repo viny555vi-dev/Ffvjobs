@@ -1,15 +1,9 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:paper"
-    },
-    {
-      "item": "ffv_reborn:aether_shard"
-    },
-    {
-      "item": "minecraft:redstone"
-    }
+    "minecraft:paper",
+    "ffv_reborn:aether_shard",
+    "minecraft:redstone"
   ],
   "result": {
     "id": "ffv_reborn:haste_sigil",
