@@ -1,5 +1,7 @@
 package com.ffvreborn.content.client;
 
+import com.ffvreborn.content.GamepadMapping;
+
 import java.nio.IntBuffer;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
