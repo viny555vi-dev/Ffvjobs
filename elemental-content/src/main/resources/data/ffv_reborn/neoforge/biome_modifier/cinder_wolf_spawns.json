@@ -1,1 +1,1 @@
-{"type":"neoforge:add_spawns","biomes":"#minecraft:is_overworld","spawners":[{"type":"ffv_reborn:cinder_wolf","weight":28,"minCount":1,"maxCount":2}]}
+{"type":"neoforge:add_spawns","biomes":"#minecraft:is_overworld","spawners":[{"type":"ffv_reborn:cinder_wolf","weight":28,"count":2}]}
