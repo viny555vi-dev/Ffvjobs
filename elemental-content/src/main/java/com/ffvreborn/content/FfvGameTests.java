@@ -33,6 +33,8 @@ public final class FfvGameTests {
         register(event, "combat_progression", FinalFantasyVReborn.PROGRESSION_TEST, data);
         register(event, "bestiary_spawn", FinalFantasyVReborn.BESTIARY_TEST, data);
         register(event, "loot_balance", FinalFantasyVReborn.LOOT_TEST, data);
+        register(event, "ability_progression", FinalFantasyVReborn.ABILITY_PROGRESS_TEST, data);
+        register(event, "summon_entity", FinalFantasyVReborn.SUMMON_ENTITY_TEST, data);
     }
     private static void register(RegisterGameTestsEvent event, String id,
         net.neoforged.neoforge.registries.DeferredHolder<java.util.function.Consumer<GameTestHelper>, java.util.function.Consumer<GameTestHelper>> function,
@@ -94,6 +96,25 @@ public final class FfvGameTests {
         helper.assertTrue(ModEntities.AETHER_WISP.isBound(), "Aether Wisp type is missing");
         var mob = helper.spawn(ModEntities.CINDER_WOLF.get(), new BlockPos(2, 1, 2));
         helper.assertTrue(mob.isAlive(), "Cinder Wolf failed to spawn in a live test world");
+        helper.succeed();
+    }
+
+    public static void abilityProgression(GameTestHelper helper) {
+        PlayerProgression player = PlayerProgression.fresh().withJob("black_mage").awardKillXp(375);
+        helper.assertTrue(player.level("black_mage") >= 3, "Black Mage did not level from combat XP");
+        player = player.learnAbility("fire", 1, 2);
+        helper.assertTrue(player.hasAbility("fire"), "Ability was not persisted as learned");
+        helper.assertTrue(player.abp("black_mage") >= 2, "Learning did not spend ABP");
+        player = player.spendMana(12);
+        helper.assertTrue(player.mana() == 88, "Spell did not consume mana");
+        helper.succeed();
+    }
+    public static void summonEntitySpawn(GameTestHelper helper) {
+        helper.assertTrue(ModEntities.PYREWING.isBound(), "Pyrewing summon type missing");
+        helper.assertTrue(ModEntities.FROSTMane.isBound(), "Frostmane summon type missing");
+        helper.assertTrue(ModEntities.TERRAGORN.isBound(), "Terragorn summon type missing");
+        var creature = helper.spawn(ModEntities.PYREWING.get(), new BlockPos(3, 1, 3));
+        helper.assertTrue(creature.isAlive(), "Pyrewing did not spawn in Minecraft");
         helper.succeed();
     }
     public static void lootBalance(GameTestHelper helper) {
