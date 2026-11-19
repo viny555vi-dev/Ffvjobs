@@ -1,1 +1,12 @@
-{"name":"Final Fantasy V Reborn","version":"1.0.0-dev","minecraft":"26.3","loader":"neoforge","loaderVersion":"26.3.0.95","javaVersion":25,"requiredMods":["ffv_reborn"],"bossesEnabled":false,"modularBuild":["elemental-jobs-core","elemental-abilities","elemental-content"]}
+{
+  "name": "Final Fantasy V Reborn",
+  "version": "1.0.0",
+  "minecraft": "26.3",
+  "loader": "neoforge",
+  "loaderVersion": "26.3.0.95",
+  "javaVersion": 25,
+  "requiredMods": ["ffv_reborn"],
+  "bossesEnabled": false,
+  "modulesBundled": ["elemental-jobs-core", "elemental-abilities", "elemental-content"],
+  "gameTestsRequired": 9
+}
