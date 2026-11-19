@@ -35,26 +35,26 @@ public final class SpellEvents {
                 data = data.learnAbility(id, ability.requiredLevel(), ability.abpCost());
                 player.setData(RpgAttachments.PLAYER, data);
                 player.syncData(RpgAttachments.PLAYER);
-                player.displayClientMessage(Component.literal("Técnica aprendida: " + id + ". Use novamente para conjurar."), true);
+                player.sendSystemMessage(Component.literal("Técnica aprendida: " + id + ". Use novamente para conjurar."));
             } catch (IllegalStateException error) {
-                player.displayClientMessage(Component.literal("Não foi possível aprender: " + error.getMessage()), true);
+                player.sendSystemMessage(Component.literal("Não foi possível aprender: " + error.getMessage()));
             }
             return;
         }
         if (!data.activeJob().equals(ability.jobId())) {
-            player.displayClientMessage(Component.literal("Esta técnica exige a profissão " + ability.jobId() + "."), true);
+            player.sendSystemMessage(Component.literal("Esta técnica exige a profissão " + ability.jobId() + "."));
             return;
         }
         try {
             data = data.spendMana(ability.manaCost());
         } catch (IllegalStateException error) {
-            player.displayClientMessage(Component.literal("Mana insuficiente."), true);
+            player.sendSystemMessage(Component.literal("Mana insuficiente."));
             return;
         }
         player.setData(RpgAttachments.PLAYER, data);
         player.syncData(RpgAttachments.PLAYER);
         execute(player, ability.effect());
-        player.displayClientMessage(Component.literal(id.toUpperCase() + " conjurado • " + ability.manaCost() + " PM"), true);
+        player.sendSystemMessage(Component.literal(id.toUpperCase() + " conjurado • " + ability.manaCost() + " PM"));
     }
     private static String abilityFor(Item item) {
         if (item == ModItems.FIRE_SIGIL.get()) return "fire";
@@ -78,13 +78,13 @@ public final class SpellEvents {
             mob -> mob.isAlive() && mob.distanceToSqr(player) <= 100)
             .stream().min(Comparator.comparingDouble(player::distanceToSqr)).orElse(null);
         switch (effect) {
-            case "fire_burst" -> damageTarget(player, target, level, 8.0f, ModParticles.AETHER_FLARE.get(), true);
+            case "fire_burst" -> damageTarget(player, target, level, 8.0f, ModParticles.AETHER_FLARE.get());
             case "frost_lance" -> {
                 damageTarget(player, target, level, 7.0f, ModParticles.FROST_SHARD.get(), false);
                 if (target != null) target.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 100, 1));
             }
             case "storm_arc" -> damageTarget(player, target, level, 11.0f, ModParticles.RUNE_SPARK.get(), false);
-            case "aether_flare" -> damageTarget(player, target, level, 22.0f, ModParticles.AETHER_FLARE.get(), true);
+            case "aether_flare" -> damageTarget(player, target, level, 22.0f, ModParticles.AETHER_FLARE.get());
             case "mending_light" -> { player.heal(8.0f); burst(level, player, ModParticles.RUNE_SPARK.get(), 24); }
             case "verdant_regrowth" -> { player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 1)); burst(level, player, ModParticles.RUNE_SPARK.get(), 30); }
             case "quickening" -> { player.addEffect(new MobEffectInstance(MobEffects.SPEED, 240, 1)); burst(level, player, ModParticles.RUNE_SPARK.get(), 20); }
