@@ -2,25 +2,45 @@ package com.ffvreborn.content;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Consumer;
 import com.ffvreborn.core.JobDefinition;
 import com.ffvreborn.core.JobService;
 import com.ffvreborn.core.PlayerRpgData;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Items;
-import net.minecraft.gametest.framework.GameTest;
+import net.minecraft.core.Holder;
+import net.minecraft.gametest.framework.FunctionGameTestInstance;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.gametest.framework.GameTestHolder;
-@GameTestHolder(FinalFantasyVReborn.MOD_ID)
+import net.minecraft.gametest.framework.TestData;
+import net.minecraft.gametest.framework.TestEnvironmentDefinition;
+import net.minecraft.resources.Identifier;
+import net.neoforged.neoforge.event.RegisterGameTestsEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 public final class FfvGameTests {
-    @GameTest(template = "empty")
-    public static void modItemIsRegistered(GameTestHelper helper) {
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(FinalFantasyVReborn.MOD_ID, "crystal_of_dawn");
-        helper.assertTrue(BuiltInRegistries.ITEM.get(id) != Items.AIR, "Crystal of Dawn item was not registered");
+    private static final DeferredHolder<Consumer<GameTestHelper>, Consumer<GameTestHelper>> ITEM_TEST =
+        FinalFantasyVReborn.TEST_FUNCTIONS.register("item_registered", () -> FfvGameTests::itemRegistered);
+    private static final DeferredHolder<Consumer<GameTestHelper>, Consumer<GameTestHelper>> JOB_TEST =
+        FinalFantasyVReborn.TEST_FUNCTIONS.register("job_progress", () -> FfvGameTests::jobProgressWorks);
+    private FfvGameTests() {}
+    public static void registerTests(RegisterGameTestsEvent event) {
+        Holder<TestEnvironmentDefinition<?>> emptyEnvironment = event.registerEnvironment(
+            Identifier.fromNamespaceAndPath(FinalFantasyVReborn.MOD_ID, "empty"),
+            new TestEnvironmentDefinition.AllOf()
+        );
+        TestData<Holder<TestEnvironmentDefinition<?>>> data =
+            new TestData<>(emptyEnvironment, Identifier.fromNamespaceAndPath("minecraft", "empty"), 200, 0, true);
+        event.registerTest(
+            Identifier.fromNamespaceAndPath(FinalFantasyVReborn.MOD_ID, "item_registered"),
+            new FunctionGameTestInstance(ITEM_TEST.getKey(), data)
+        );
+        event.registerTest(
+            Identifier.fromNamespaceAndPath(FinalFantasyVReborn.MOD_ID, "job_progress"),
+            new FunctionGameTestInstance(JOB_TEST.getKey(), data)
+        );
+    }
+    private static void itemRegistered(GameTestHelper helper) {
+        helper.assertTrue(FinalFantasyVReborn.CRYSTAL_OF_DAWN.isBound(), "Crystal of Dawn registry object was not bound");
         helper.succeed();
     }
-    @GameTest(template = "empty")
-    public static void jobProgressWorksInsideMinecraftServer(GameTestHelper helper) {
+    private static void jobProgressWorks(GameTestHelper helper) {
         PlayerRpgData player = new PlayerRpgData(UUID.randomUUID());
         JobService jobs = new JobService(List.of(
             new JobDefinition("freelancer", "Freelancer", "Generalist", Set.of()),
