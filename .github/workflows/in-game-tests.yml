@@ -4,6 +4,9 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+concurrency:
+  group: ffv-reborn-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   minecraft-26-3-neoforge-gametests:
     runs-on: ubuntu-latest
@@ -25,6 +28,19 @@ jobs:
         run: gradle build --no-daemon --stacktrace
       - name: Launch real Minecraft 26.3 NeoForge GameTestServer
         run: gradle :elemental-content:runGameTestServer --no-daemon --stacktrace
+      - name: Assemble installable modpack
+        run: |
+          mkdir -p dist/overrides/mods
+          cp elemental-content/build/libs/ffv_reborn-1.0.0.jar dist/overrides/mods/
+          cp modpack/manifest.json dist/manifest.json
+          cp modpack/README.md dist/README.md
+          (cd dist && zip -qr ../Final-Fantasy-V-Reborn-modpack.zip .)
+      - name: Upload installable modpack
+        uses: actions/upload-artifact@v4
+        with:
+          name: Final-Fantasy-V-Reborn-modpack
+          path: Final-Fantasy-V-Reborn-modpack.zip
+          if-no-files-found: error
       - name: Preserve Minecraft logs
         if: always()
         uses: actions/upload-artifact@v4
