@@ -22,13 +22,13 @@ public final class CombatEvents {
         Entity attacker = event.getSource().getEntity();
         if (!(attacker instanceof ServerPlayer player) || !(victim instanceof Monster) || victim instanceof FFVSummon) return;
         PlayerProgression current = player.getData(RpgAttachments.PLAYER);
-        int xp = CombatLoot.xpForKill(victim.getMaxHealth(), true);
+        int xp = CombatLoot.xpForKill(victim.getMaxHealth());
         PlayerProgression updated = current.awardKillXp(xp);
         player.setData(RpgAttachments.PLAYER, updated);
         player.syncData(RpgAttachments.PLAYER);
-        player.displayClientMessage(net.minecraft.network.chat.Component.literal(
+        player.sendSystemMessage(net.minecraft.network.chat.Component.literal(
             current.activeJob().toUpperCase() + "  +" + xp + " EXP  •  Nv. " + updated.level(current.activeJob()) +
-            "  •  ABP " + updated.abp(current.activeJob())), true);
+            "  •  ABP " + updated.abp(current.activeJob())));
     }
 
     @SubscribeEvent
