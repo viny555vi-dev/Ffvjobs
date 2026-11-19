@@ -9,7 +9,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
-@EventBusSubscriber(modid = FinalFantasyVReborn.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = FinalFantasyVReborn.MOD_ID, value = Dist.CLIENT)
 public final class ClientEntityRegistration {
     public static final ModelLayerLocation MONSTER_LAYER = new ModelLayerLocation(
         Identifier.fromNamespaceAndPath(FinalFantasyVReborn.MOD_ID, "bestiary_creature"), "main");
