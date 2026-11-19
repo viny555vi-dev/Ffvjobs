@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "ffv_reborn:aether_shard"
+    },
+    {
+      "item": "minecraft:clock"
+    }
+  ],
+  "result": {
+    "id": "ffv_reborn:slow_sigil",
+    "count": 1
+  }
+}
