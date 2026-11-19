@@ -1,6 +1,8 @@
 modLoader="javafml"
 loaderVersion="[4,)"
 license="${mod_license}"
+[[mixins]]
+config="ffv_reborn.mixins.json"
 [[mods]]
 modId="${mod_id}"
 version="${mod_version}"
