@@ -1,12 +1,8 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:paper"
-    },
-    {
-      "item": "ffv_reborn:aether_shard"
-    }
+    "minecraft:paper",
+    "ffv_reborn:aether_shard"
   ],
   "result": {
     "id": "ffv_reborn:fire_sigil",
