@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:bone"
+    },
+    {
+      "item": "ffv_reborn:aether_shard"
+    },
+    {
+      "item": "ffv_reborn:aether_shard"
+    },
+    {
+      "item": "minecraft:blue_ice"
+    }
+  ],
+  "result": {
+    "id": "ffv_reborn:frostmane_sigil",
+    "count": 1
+  }
+}
