@@ -14,7 +14,7 @@ The build is split into three Gradle modules and packaged as one installable Neo
 - Three original hostile creatures: Cinder Wolf, Mire Hag and Aether Wisp.
 - Three temporary allied summons: Pyrewing, Frostmane and Terragorn.
 - Four rare weapons and Aether Shards, dropped by hostiles and added to simple dungeon chests.
-- Three custom elemental particle groups and procedural creature animation.
+- Three custom elemental particle groups and distinct procedural creature rigs and animations.
 - Over-the-shoulder third-person adventure camera mixin, dynamic follow distance/FOV/roll, and SDL3 controller input for DualSense / DualSenseX XInput mode.
 
 Bosses are intentionally excluded from this release.
