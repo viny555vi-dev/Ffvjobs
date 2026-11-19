@@ -40,8 +40,9 @@ jobs:
       - name: Launch Minecraft client renderer and camera smoke test
         run: |
           set +e
-          XDG_RUNTIME_DIR=/tmp/ffv-runtime WAYLAND_DISPLAY=wayland-1 SDL_VIDEODRIVER=wayland LIBGL_ALWAYS_SOFTWARE=1 MESA_LOADER_DRIVER_OVERRIDE=llvmpipe timeout -k 5s 60s gradle :elemental-content:runClient --no-daemon --stacktrace 2>&1 | tee client-smoke.log
-          status=${PIPESTATUS[0]}
+          XDG_RUNTIME_DIR=/tmp/ffv-runtime WAYLAND_DISPLAY=wayland-1 SDL_VIDEODRIVER=wayland LIBGL_ALWAYS_SOFTWARE=1 MESA_LOADER_DRIVER_OVERRIDE=llvmpipe timeout -k 5s 60s gradle :elemental-content:runClient --no-daemon --stacktrace > client-smoke.log 2>&1
+          status=$?
+          pkill -f 'net.minecraft.client.main.Main' || true
           set -e
           if [ "$status" -ne 124 ] && [ "$status" -ne 0 ]; then
             cat client-smoke.log
