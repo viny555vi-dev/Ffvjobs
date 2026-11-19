@@ -1,15 +1,9 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:paper"
-    },
-    {
-      "item": "ffv_reborn:aether_shard"
-    },
-    {
-      "item": "minecraft:copper_ingot"
-    }
+    "minecraft:paper",
+    "ffv_reborn:aether_shard",
+    "minecraft:copper_ingot"
   ],
   "result": {
     "id": "ffv_reborn:thunder_sigil",
