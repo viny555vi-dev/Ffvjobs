@@ -14,7 +14,7 @@ public final class GamepadMapping {
         float lx = axis(leftX), ly = axis(leftY);
         float rx = deadzone(rightX), ry = deadzone(rightY);
         return new State(ly < -0.24f, ly > 0.24f, lx < -0.24f, lx > 0.24f,
-            south, east, west || leftTrigger(rightTrigger), north || leftTrigger(leftTrigger),
+            south, east, west || triggerPressed(rightTrigger), north || triggerPressed(leftTrigger),
             touchpad, -rx * 3.2f, ry * 2.7f);
     }
     private static float axis(float value) {
@@ -23,5 +23,5 @@ public final class GamepadMapping {
     private static float deadzone(float value) {
         return Math.abs(value) < 0.12f ? 0.0f : Mth.clamp(value, -1.0f, 1.0f);
     }
-    private static boolean leftTrigger(float value) { return value > 0.35f; }
+    private static boolean triggerPressed(float value) { return value > 0.35f; }
 }
