@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:amethyst_shard"
+    },
+    {
+      "item": "ffv_reborn:aether_shard"
+    },
+    {
+      "item": "ffv_reborn:aether_shard"
+    },
+    {
+      "item": "ffv_reborn:aether_shard"
+    },
+    {
+      "item": "ffv_reborn:aether_shard"
+    }
+  ],
+  "result": {
+    "id": "ffv_reborn:crystal_of_dawn",
+    "count": 1
+  }
+}
