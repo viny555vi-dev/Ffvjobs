@@ -6,6 +6,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -15,6 +17,17 @@ import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 @EventBusSubscriber(modid = FinalFantasyVReborn.MOD_ID)
 public final class CombatEvents {
     private CombatEvents() {}
+
+
+    @SubscribeEvent
+    public static void applyWeaponMastery(LivingIncomingDamageEvent event) {
+        if (!(event.getSource().getEntity() instanceof Player player)) return;
+        var weapon = player.getMainHandItem().getItem();
+        float bonus = weapon == ModItems.EMBERSTEEL_BLADE.get() ? 4.0f
+            : weapon == ModItems.TIDEGLASS_STAFF.get() ? 3.0f
+            : weapon == ModItems.WYRMFANG_SPEAR.get() ? 5.0f : 0.0f;
+        if (bonus > 0.0f) event.setAmount(event.getAmount() + bonus);
+    }
 
     @SubscribeEvent
     public static void onHostileKilled(LivingDeathEvent event) {
