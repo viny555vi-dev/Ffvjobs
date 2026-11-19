@@ -1,5 +1,6 @@
 package com.ffvreborn.content.client;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -15,7 +16,7 @@ import org.lwjgl.glfw.GLFW;
 @EventBusSubscriber(value = Dist.CLIENT, modid = "ffv_reborn")
 public final class AdventureCameraKeys {
     public static final KeyMapping TOGGLE_CAMERA = new KeyMapping(
-        "key.ffv_reborn.toggle_camera", net.minecraft.client.InputType.KEYSYM, GLFW.GLFW_KEY_V,
+        "key.ffv_reborn.toggle_camera", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_V,
         KeyMapping.Category.register(Identifier.fromNamespaceAndPath("ffv_reborn", "camera")));
     private AdventureCameraKeys() {}
     @SubscribeEvent public static void register(RegisterKeyMappingsEvent event) {
